@@ -9,6 +9,14 @@
         <el-button @click="addOrUpdateHandle()">新增</el-button>
         <el-button @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
+      <el-select v-model="dataForm.appName" clearable placeholder="请选择">
+    <el-option
+      v-for="item in options"
+      :key="item.id"
+      :label="item.label"
+      :value="item.id">
+    </el-option>
+  </el-select>
     </el-form>
     <el-table
       :data="dataList"
@@ -122,6 +130,7 @@
         dataForm: {
           key: ''
         },
+        item:[],
         dataList: [],
         pageIndex: 1,
         pageSize: 10,
@@ -138,11 +147,18 @@
       this.getDataList()
     },
     methods: {
+       // 获取产品名称列表
+    getPatrolUser() {
+      this.$http.get(this.$api.userList).then(res => {
+            this.userList = res.data.data.userList;
+      });
+    },
       // 获取数据列表
       getDataList () {
         this.dataListLoading = true
         this.$http({
           url: this.$http.adornUrl('/app/recharge/list'),
+          // url: this.$http.adornUrl('/app/recharge/queryProductListBySysUserId'),
           method: 'get',
           params: this.$http.adornParams({
             'page': this.pageIndex,
