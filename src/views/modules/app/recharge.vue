@@ -12,9 +12,9 @@
       <el-select v-model="dataForm.appName" clearable placeholder="请选择">
     <el-option
       v-for="item in options"
-      :key="item.id"
+      :key="item.value"
       :label="item.label"
-      :value="item.id">
+      :value="item.value">
     </el-option>
   </el-select>
     </el-form>
@@ -128,9 +128,9 @@
     data () {
       return {
         dataForm: {
-          key: ''
+          key: '',
+          appName:''
         },
-        item:[],
         dataList: [],
         pageIndex: 1,
         pageSize: 10,
