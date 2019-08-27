@@ -147,7 +147,7 @@
           label: '爱消除'
         }, {
           value: '选项7',
-          label: 'hash彩,爆点'
+          label: 'hash彩，爆点'
         }],
         dataForm: {
           key: '',
