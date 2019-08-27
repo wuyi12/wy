@@ -10,110 +10,36 @@
         <el-button @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
       <el-select v-model="dataForm.appName" clearable placeholder="请选择">
-    <el-option
-      v-for="item in options"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
-    </el-option>
-  </el-select>
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
     </el-form>
     <el-table
       :data="dataList"
       border
       v-loading="dataListLoading"
       @selection-change="selectionChangeHandle"
-      style="width: 100%;">
-      <el-table-column
-        type="selection"
-        header-align="center"
-        align="center"
-        width="50">
-      </el-table-column>
-      <el-table-column
-        prop="id"
-        header-align="center"
-        align="center"
-        label="ID">
-      </el-table-column>
-      <el-table-column
-        prop="userId"
-        header-align="center"
-        align="center"
-        label="用户ID">
-      </el-table-column>
-      <el-table-column
-        prop="appId"
-        header-align="center"
-        align="center"
-        label="应用ID">
-      </el-table-column>
-      <el-table-column
-        prop="uuid"
-        header-align="center"
-        align="center"
-        label="订单ID">
-      </el-table-column>
-      <el-table-column
-        prop="amount"
-        header-align="center"
-        align="center"
-        label="数量">
-      </el-table-column>
-      <el-table-column
-        prop="memo"
-        header-align="center"
-        align="center"
-        label="备注">
-      </el-table-column>
-      <el-table-column
-        prop="addr"
-        header-align="center"
-        align="center"
-        label="提币地址">
-      </el-table-column>
-      <el-table-column
-        prop="type"
-        header-align="center"
-        align="center"
-        label="币种">
-      </el-table-column>
-      <el-table-column
-        prop="tip"
-        header-align="center"
-        align="center"
-        label="手续费">
-      </el-table-column>
-      <el-table-column
-        prop="status"
-        header-align="center"
-        align="center"
-        label="状态">
-      </el-table-column>
-      <el-table-column
-        prop="isCheck"
-        header-align="center"
-        align="center"
-        label="人工审查">
-      </el-table-column>
-      <el-table-column
-        prop="createtime"
-        header-align="center"
-        align="center"
-        label="创建时间">
-      </el-table-column>
-      <el-table-column
-        prop="updatetime"
-        header-align="center"
-        align="center"
-        label="更新时间">
-      </el-table-column>
-      <el-table-column
-        fixed="right"
-        header-align="center"
-        align="center"
-        width="150"
-        label="操作">
+      style="width: 100%;"
+    >
+      <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
+      <el-table-column prop="id" header-align="center" align="center" label="ID"></el-table-column>
+      <el-table-column prop="userId" header-align="center" align="center" label="用户ID"></el-table-column>
+      <el-table-column prop="appId" header-align="center" align="center" label="应用ID"></el-table-column>
+      <el-table-column prop="uuid" header-align="center" align="center" label="订单ID"></el-table-column>
+      <el-table-column prop="amount" header-align="center" align="center" label="数量"></el-table-column>
+      <el-table-column prop="memo" header-align="center" align="center" label="备注"></el-table-column>
+      <el-table-column prop="addr" header-align="center" align="center" label="提币地址"></el-table-column>
+      <el-table-column prop="type" header-align="center" align="center" label="币种"></el-table-column>
+      <el-table-column prop="tip" header-align="center" align="center" label="手续费"></el-table-column>
+      <el-table-column prop="status" header-align="center" align="center" label="状态"></el-table-column>
+      <el-table-column prop="isCheck" header-align="center" align="center" label="人工审查"></el-table-column>
+      <el-table-column prop="createtime" header-align="center" align="center" label="创建时间"></el-table-column>
+      <el-table-column prop="updatetime" header-align="center" align="center" label="更新时间"></el-table-column>
+      <el-table-column fixed="right" header-align="center" align="center" width="150" label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="addOrUpdateHandle(scope.row.id)">修改</el-button>
           <el-button type="text" size="small" @click="deleteHandle(scope.row.id)">删除</el-button>
@@ -127,133 +53,151 @@
       :page-sizes="[10, 20, 50, 100]"
       :page-size="pageSize"
       :total="totalPage"
-      layout="total, sizes, prev, pager, next, jumper">
-    </el-pagination>
+      layout="total, sizes, prev, pager, next, jumper"
+    ></el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
     <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
   </div>
 </template>
 
 <script>
-  import AddOrUpdate from './withdraw-add-or-update'
-  export default {
-    data () {
-      return {
-        options:[{
-          value: '选项1',
-          label: '耍大牌'
-        }, {
-          value: '选项2',
-          label: '四川麻将'
-        }, {
-          value: '选项3',
-          label: '德州扑克'
-        }, {
-          value: '选项4',
-          label: '五子棋'
-        }, {
-          value: '选项5',
-          label: '开心消消乐'
-        }, {
-          value: '选项6',
-          label: '爱消除'
-        }, {
-          value: '选项7',
-          label: 'hash彩,爆点'
-        }],
-        dataForm: {
-          key: ''
+import AddOrUpdate from "./withdraw-add-or-update";
+export default {
+  data() {
+    return {
+      options: [
+        {
+          value: "选项1",
+          label: "耍大牌"
         },
-        dataList: [],
-        pageIndex: 1,
-        pageSize: 10,
-        totalPage: 0,
-        dataListLoading: false,
-        dataListSelections: [],
-        addOrUpdateVisible: false
-      }
+        {
+          value: "选项2",
+          label: "四川麻将"
+        },
+        {
+          value: "选项3",
+          label: "德州扑克"
+        },
+        {
+          value: "选项4",
+          label: "五子棋"
+        },
+        {
+          value: "选项5",
+          label: "开心消消乐"
+        },
+        {
+          value: "选项6",
+          label: "爱消除"
+        },
+        {
+          value: "选项7",
+          label: "hash彩,爆点"
+        },
+        {
+          value: "选项8",
+          label: "hash彩,接龙"
+        }
+      ],
+      dataForm: {
+        key: ""
+      },
+      dataList: [],
+      pageIndex: 1,
+      pageSize: 10,
+      totalPage: 0,
+      dataListLoading: false,
+      dataListSelections: [],
+      addOrUpdateVisible: false
+    };
+  },
+  components: {
+    AddOrUpdate
+  },
+  activated() {
+    this.getDataList();
+  },
+  methods: {
+    // 获取数据列表
+    getDataList() {
+      this.dataListLoading = true;
+      this.$http({
+        url: this.$http.adornUrl("/app/withdraw/list"),
+        method: "get",
+        params: this.$http.adornParams({
+          page: this.pageIndex,
+          limit: this.pageSize,
+          key: this.dataForm.key
+        })
+      }).then(({ data }) => {
+        if (data && data.code === 0) {
+          this.dataList = data.page.list;
+          this.totalPage = data.page.totalCount;
+        } else {
+          this.dataList = [];
+          this.totalPage = 0;
+        }
+        this.dataListLoading = false;
+      });
     },
-    components: {
-      AddOrUpdate
+    // 每页数
+    sizeChangeHandle(val) {
+      this.pageSize = val;
+      this.pageIndex = 1;
+      this.getDataList();
     },
-    activated () {
-      this.getDataList()
+    // 当前页
+    currentChangeHandle(val) {
+      this.pageIndex = val;
+      this.getDataList();
     },
-    methods: {
-      // 获取数据列表
-      getDataList () {
-        this.dataListLoading = true
+    // 多选
+    selectionChangeHandle(val) {
+      this.dataListSelections = val;
+    },
+    // 新增 / 修改
+    addOrUpdateHandle(id) {
+      this.addOrUpdateVisible = true;
+      this.$nextTick(() => {
+        this.$refs.addOrUpdate.init(id);
+      });
+    },
+    // 删除
+    deleteHandle(id) {
+      var ids = id
+        ? [id]
+        : this.dataListSelections.map(item => {
+            return item.id;
+          });
+      this.$confirm(
+        `确定对[id=${ids.join(",")}]进行[${id ? "删除" : "批量删除"}]操作?`,
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }
+      ).then(() => {
         this.$http({
-          url: this.$http.adornUrl('/app/withdraw/list'),
-          method: 'get',
-          params: this.$http.adornParams({
-            'page': this.pageIndex,
-            'limit': this.pageSize,
-            'key': this.dataForm.key
-          })
-        }).then(({data}) => {
+          url: this.$http.adornUrl("/app/withdraw/delete"),
+          method: "post",
+          data: this.$http.adornData(ids, false)
+        }).then(({ data }) => {
           if (data && data.code === 0) {
-            this.dataList = data.page.list
-            this.totalPage = data.page.totalCount
+            this.$message({
+              message: "操作成功",
+              type: "success",
+              duration: 1500,
+              onClose: () => {
+                this.getDataList();
+              }
+            });
           } else {
-            this.dataList = []
-            this.totalPage = 0
+            this.$message.error(data.msg);
           }
-          this.dataListLoading = false
-        })
-      },
-      // 每页数
-      sizeChangeHandle (val) {
-        this.pageSize = val
-        this.pageIndex = 1
-        this.getDataList()
-      },
-      // 当前页
-      currentChangeHandle (val) {
-        this.pageIndex = val
-        this.getDataList()
-      },
-      // 多选
-      selectionChangeHandle (val) {
-        this.dataListSelections = val
-      },
-      // 新增 / 修改
-      addOrUpdateHandle (id) {
-        this.addOrUpdateVisible = true
-        this.$nextTick(() => {
-          this.$refs.addOrUpdate.init(id)
-        })
-      },
-      // 删除
-      deleteHandle (id) {
-        var ids = id ? [id] : this.dataListSelections.map(item => {
-          return item.id
-        })
-        this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$http({
-            url: this.$http.adornUrl('/app/withdraw/delete'),
-            method: 'post',
-            data: this.$http.adornData(ids, false)
-          }).then(({data}) => {
-            if (data && data.code === 0) {
-              this.$message({
-                message: '操作成功',
-                type: 'success',
-                duration: 1500,
-                onClose: () => {
-                  this.getDataList()
-                }
-              })
-            } else {
-              this.$message.error(data.msg)
-            }
-          })
-        })
-      }
+        });
+      });
     }
   }
+};
 </script>
