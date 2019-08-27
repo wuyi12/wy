@@ -148,11 +148,13 @@
     },
     methods: {
        // 获取产品名称列表
-    getPatrolUser() {
-      this.$http.get(this.$api.userList).then(res => {
-            this.userList = res.data.data.userList;
-      });
-    },
+       init(appName){
+         this.$http({
+         url:this.$http.adornUrl('/app/recharge/queryProductListBySysUserId'),
+          method: 'post',
+       })
+       },
+       
       // 获取数据列表
       getDataList () {
         this.dataListLoading = true
