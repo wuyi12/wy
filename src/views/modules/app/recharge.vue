@@ -127,6 +127,28 @@
   export default {
     data () {
       return {
+        options:[{
+          value: '选项1',
+          label: '耍大牌'
+        }, {
+          value: '选项2',
+          label: '四川麻将'
+        }, {
+          value: '选项3',
+          label: '德州扑克'
+        }, {
+          value: '选项4',
+          label: '五子棋'
+        }, {
+          value: '选项5',
+          label: '开心消消乐'
+        }, {
+          value: '选项6',
+          label: '爱消除'
+        }, {
+          value: '选项7',
+          label: 'hash彩,爆点'
+        }],
         dataForm: {
           key: '',
           appName:''
